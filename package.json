@@ -1,0 +1,9 @@
+{
+  "name": "ece-metrics",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
