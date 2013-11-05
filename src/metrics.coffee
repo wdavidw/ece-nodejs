@@ -24,13 +24,12 @@ module.exports =
     rs = db.createReadStream
       start: "metric:#{id}:"
       stop: "metric:#{id};"
-    .on 'data', (data) ->
+    rs.on 'data', (data) ->
       [_, id, timestamp] = data.key.split ':'
       metrics.push id: id, timestamp: timestamp, value: value
-    .on 'error', (err) ->
-      console.log('Oh my!', err)
-    .on 'close', () ->
-      console.log('Stream closed')
+    rs.on 'error', callback
+    rs.on 'close', ->
+      callback null, metrics
 
   ###
   `save(id, metrics, callback)`
@@ -45,10 +44,8 @@ module.exports =
   ###
   save: (id, metrics, callback) ->
     ws = db.createWriteStream()
-    ws.on 'error', (err) ->
-      callback err
-    ws.on 'close', ->
-      callback()
+    ws.on 'error', callback
+    ws.on 'close', callback
     for metric in metrics
       {timestamp, value} = metric
       ws.write key: "metric:#{id}:#{timestamp}", value: value
