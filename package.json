@@ -6,13 +6,13 @@
     "express": "*",
     "jade": "*",
     "stylus": "*",
-    "supervisor": "*"
+    "supervisor": "*",
+    "leveldown": "*",
+    "levelup": "*"
   },
   "devDependencies": {
     "coffee-script": "*",
     "mocha": "*",
     "should": "*",
-    "leveldown": "*",
-    "levelup": "*"
   }
 }
