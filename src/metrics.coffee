@@ -20,14 +20,18 @@ module.exports =
   ###
   get: (id, options, callback) ->
     callback = options if arguments.length is 2
-    setImmediate ->
-      callback null, [
-        timestamp: (new Date '2013-11-04 14:00 UTC').getTime(),
-        value: 1234
-      ,
-        timestamp: (new Date '2013-11-04 14:10 UTC').getTime(),
-        value: 5678
-      ]
+    metrics = []
+    rs = db.createReadStream
+      start: "metric:#{id}:"
+      stop: "metric:#{id};"
+    .on 'data', (data) ->
+      [_, id, timestamp] = data.key.split ':'
+      metrics.push id: id, timestamp: timestamp, value: value
+    .on 'error', (err) ->
+      console.log('Oh my!', err)
+    .on 'close', () ->
+      console.log('Stream closed')
+
   ###
   `save(id, metrics, callback)`
   ----------------------------
@@ -46,7 +50,6 @@ module.exports =
     ws.on 'close', ->
       callback()
     for metric in metrics
-      
       {timestamp, value} = metric
       ws.write key: "metric:#{id}:#{timestamp}", value: value
     ws.end()
