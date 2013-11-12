@@ -13,6 +13,6 @@
   "devDependencies": {
     "coffee-script": "*",
     "mocha": "*",
-    "should": "*",
+    "should": "*"
   }
 }
