@@ -4,20 +4,23 @@ stylus = require 'stylus'
 express = require 'express'
 metrics = require './metrics'
 
-app = express();
+app = express()
 
-app.set 'views', "#{__dirname}/views"
+app.set 'views', __dirname + '/../views'
 app.set 'view engine', 'jade'
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use express.cookieParser 'your secret here'
 app.use express.session()
 app.use app.router
-app.use stylus.middleware "#{__dirname}/public"
-app.use express.static "#{__dirname}/public"
+app.use stylus.middleware "#{__dirname}/../public"
+app.use express.static "#{__dirname}/../public"
 app.use express.errorHandler
   showStack: true
   dumpExceptions: true
+
+app.get '/', (req, res) ->
+  res.render 'index', title: 'toto'
 
 app.get '/metric/:id.json', (req, res, next) ->
   metrics.get req.params.id, (err, values) ->
