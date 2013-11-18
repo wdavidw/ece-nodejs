@@ -1,0 +1,12 @@
+#!/usr/bin/env coffee
+
+metrics = require '../lib/metrics'
+
+metrics.save 'metric_1', [
+      timestamp:(new Date '2013-11-04 14:00 UTC').getTime(), value:123
+    ,
+      timestamp:(new Date '2013-11-05 14:10 UTC').getTime(), value:456
+    ,
+      timestamp:(new Date '2013-11-08 14:10 UTC').getTime(), value:256
+    ], (err) ->
+      throw err if err

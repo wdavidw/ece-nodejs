@@ -20,7 +20,7 @@ app.use express.errorHandler
   dumpExceptions: true
 
 app.get '/', (req, res) ->
-  res.render 'index', title: 'toto'
+  res.render 'index', title: 'Metrics'
 
 metric_get = (req, res, next) ->
   metrics.get req.params.id, (err, values) ->
