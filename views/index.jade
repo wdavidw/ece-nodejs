@@ -6,15 +6,30 @@ block head
 
 block content
 
-  h1= title
-  p Welcome to #{title}
-  form(action='/metric')
-    input#metric_id(name='metric')
-    input#metric_ok(type='submit', value='OK')
+  :stylus
+    h1, p
+      margin 5px
+    #form, #graph
+      position relative
+      width 400px
+      margin 0 auto
+      background #CCCCCC
+      padding 10px
+      margin-bottom 20px
+    #graph
+      height 140px
+  #form
+    h1= title
+    p Welcome to #{title}
+    form(action='/metric')
+      input#metric_id(name='metric')
+      input#metric_ok(type='submit', value='OK')
+  #graph
   :coffee
     $('#metric_ok').click (e) ->
       e.preventDefault()
       id = $('#metric_id').val()
       $.getJSON "/metric/#{id}.json", {}, (data) ->
+        
         console.log data
     
