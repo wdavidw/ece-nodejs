@@ -1,0 +1,20 @@
+extends layout
+
+block head
+  script(src="/js/d3.js", charset="utf-8")
+  script(src="/js/jquery.js", charset="utf-8")
+
+block content
+
+  h1= title
+  p Welcome to #{title}
+  form(action='/metric')
+    input#metric_id(name='metric')
+    input#metric_ok(type='submit', value='OK')
+  :coffee
+    $('#metric_ok').click (e) ->
+      e.preventDefault()
+      id = $('#metric_id').val()
+      $.getJSON "/metric/#{id}.json", {}, (data) ->
+        console.log data
+    

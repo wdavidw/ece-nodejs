@@ -22,12 +22,14 @@ app.use express.errorHandler
 app.get '/', (req, res) ->
   res.render 'index', title: 'toto'
 
-app.get '/metric/:id.json', (req, res, next) ->
+metric_get = (req, res, next) ->
   metrics.get req.params.id, (err, values) ->
     return next err if err
     res.json
       id: req.params.id
       values: values
+app.get '/metric/:id.json', metric_get
+app.get '/metric?metric=:id', metric_get
 
 app.post '/metric/:id.json', (req, res, next) ->
   values = JSON.parse req.body
