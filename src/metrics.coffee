@@ -30,7 +30,6 @@ module.exports =
     rs.on 'error', callback
     rs.on 'close', ->
       callback null, metrics
-
   ###
   `save(id, metrics, callback)`
   ----------------------------

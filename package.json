@@ -11,6 +11,7 @@
     "levelup": "*"
   },
   "devDependencies": {
+    "request": "*",
     "coffee-script": "*",
     "mocha": "*",
     "should": "*"
