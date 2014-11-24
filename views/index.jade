@@ -1,0 +1,50 @@
+doctype html    
+html
+  head
+    meta(charset='utf-8')
+    title HDFS Web UI
+    link(rel='icon', type='image/vnd.microsoft.icon', href='favicon.ico')
+    link(rel='shortcut icon', type='image/x-icon', href='favicon.ico')
+    link(rel='stylesheet', href='vendors/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='resources/webapp.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    script(type='text/javascript', src='vendors/jquery-1.11.1.min.js')
+    script(type='text/javascript', src='vendors/bootstrap/js/bootstrap.min.js')
+    script
+      :coffee 
+        $().ready ->
+          console.log 'ready'
+          $('#login').submit (e) ->
+            # TODO: validation
+            user =
+              username: $('#login-username').val()
+              password: $('#login-password').val()
+            console.log 'user', user
+            e.preventDefault()
+            $.post "/user/login", user, (data) ->
+              console.log 'data', data
+            , 'json'
+  body
+    
+    form#login(action="/login", method="post", role="form")
+      table
+        tr.form-group
+          th
+            label(for="login-username") Username
+          td
+            input#login-username.form-control(type='text', name="username")
+        tr.form-group
+          th
+            label(for="login-password") Password
+          td
+            input#login-password.form-control(type='password', name="password")
+        tr.form-group
+          th
+          td
+            //- button.btn.btn-primary(type='button') Login
+            //- button.btn.btn-default(type='button') Signin
+            input.btn.btn-primary(type='submit', value="Login")
+            input.btn.btn-default(type='submit', value="Signin")
+
+  
+

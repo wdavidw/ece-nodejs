@@ -1,4 +1,6 @@
 
+require('coffee-script/register')
+
 var app = require('../lib/app');
 app.listen(1337);
 
