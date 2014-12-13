@@ -35,7 +35,8 @@
     "serve-static" : "latest",
     "stylus": "latest",
     "rimraf": "latest",
-    "level": "latest"
+    "level": "latest",
+    "csv-parse": "latest"
   },
   "devDependencies": {
     "should": "latest",
