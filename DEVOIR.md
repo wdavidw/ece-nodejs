@@ -104,7 +104,7 @@ export(client, format: 'csv')
 The leveldb database should store all the navigation history of a user. Every time a user
 visit a page, a new log entry should be inserted inside the database. The user shall be able to consult his activity inside his protected area on the website.
 
-
+Extra bonus points if socket-io comes into the dance to publish logs in realtime.
 
 
 
