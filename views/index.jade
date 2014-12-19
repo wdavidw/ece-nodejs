@@ -10,6 +10,7 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1")
     script(type='text/javascript', src='vendors/jquery-1.11.1.min.js')
     script(type='text/javascript', src='vendors/bootstrap/js/bootstrap.min.js')
+    script(src="/socket.io/socket.io.js")
     script
       :coffee 
         $().ready ->
@@ -24,6 +25,10 @@ html
             $.post "/user/login", user, (data) ->
               console.log 'data', data
             , 'json'
+        socket = io 'http://localhost'
+        socket.on 'news', (data) ->
+          console.log data
+          socket.emit 'my other event', my: 'data'
   body
     
     form#login(action="/login", method="post", role="form")

@@ -16,6 +16,13 @@ serve_static = require 'serve-static'
 # config = require '../conf/hdfs'
 
 app = express()
+server = http.Server(app)
+io = require('socket.io')(server)
+
+sockets = []
+
+io.on 'connection', (socket) ->
+  sockets.push socket
 
 app.set 'views', __dirname + '/../views'
 app.set 'view engine', 'jade'
@@ -25,6 +32,19 @@ app.use bodyParser.urlencoded()
 app.use cookieParser 'toto'
 app.use methodOverride '_method'
 app.use session secret: 'toto', resave: true, saveUninitialized: true
+
+app.use (req, res, next) ->
+  req.session.count ?=  0
+  req.session.count++
+  req.session.history ?= []
+  req.session.history.push req.url
+  for socket, i in sockets
+    console.log 'emit logs'
+    socket.emit 'logs',
+      username: req.session.username or 'anonymous'
+      count: req.session.count
+      url: req.url
+  next()
 
 app.use coffee
   src: "#{__dirname}/../views"
@@ -42,8 +62,14 @@ app.use serve_static "#{__dirname}/../public"
 
 app.get '/', (req, res, next) ->
   res.render 'index', title: 'Express'
+
+app.get '/admin', (req, res, next) ->
+  res.render 'admin', title: 'Express'
   
 app.post '/user/login', (req, res, next) ->
+  for socket, i in sockets
+    socket.emit 'login', username: 'wdavidw', crdate: Date.now()
+  req.session.username = 'wdavidw'
   res.json
     username: 'wdavidw'
     lastname: 'Worms'
@@ -55,4 +81,4 @@ if process.env.NODE_ENV is 'development'
   app.use errorhandler()
 
 
-module.exports = app
+module.exports = server

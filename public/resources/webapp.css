@@ -1,9 +1,14 @@
+table td,
+table th {
+  padding: 5px;
+}
 #login {
   position: relative;
   width: 300px;
   margin: 100px auto;
 }
-#login td {
+#login td,
+#login th {
   padding: 5px;
 }
 #login button {
