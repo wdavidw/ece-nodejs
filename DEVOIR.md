@@ -4,8 +4,10 @@
 ## Functionnalities
 
 *   signin form: accept username/email
-*   signup form: username, email, password, re-password, firstname, lastname, server+client? validation
+*   signup form: username, email, password, re-password, firstname, lastname,
+    server+client? validation
 *   import/export csv + json
+*   user log/history visualisation
 
 ## Layout
 
@@ -97,8 +99,10 @@ export(client, format: 'csv')
 .pipe fs.createReadStream('./sample.csv')
 ```
 
+### User log/history visualisation
 
-
+The leveldb database should store all the navigation history of a user. Every time a user
+visit a page, a new log entry should be inserted inside the database. The user shall be able to consult his activity inside his protected area on the website.
 
 
 
