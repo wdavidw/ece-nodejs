@@ -1,8 +1,9 @@
 
-level = require 'level'
+levelup = require('levelup')
 
 module.exports = (db="#{__dirname}../db") ->
-  db = level db if typeof db is 'string'
+  #db = level db if typeof db is 'string'
+  db = levelup db, db: require 'jsondown' if typeof db is 'string'
   close: (callback) ->
     db.close callback
   users:
